@@ -8,6 +8,9 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.Security;
 using BlackDragon.TimeSheets.Mvc.Models;
+using BlackDragon.TimeSheets.Domain;
+using BlackDragon.TimeSheets.Applications;
+using BlackDragon.TimeSheets.Dal;
 
 namespace BlackDragon.TimeSheets.Mvc.Controllers
 {
@@ -22,14 +25,12 @@ namespace BlackDragon.TimeSheets.Mvc.Controllers
         protected override void Initialize(RequestContext requestContext)
         {
             if (FormsService == null) { FormsService = new FormsAuthenticationService(); }
-            if (MembershipService == null) { MembershipService = new AccountMembershipService(); }
+
+            if (MembershipService == null)
+            { MembershipService = new MembershipService(new TimeSheetContext()); }
 
             base.Initialize(requestContext);
         }
-
-        // **************************************
-        // URL: /Account/LogOn
-        // **************************************
 
         public ActionResult LogOn()
         {
@@ -63,20 +64,12 @@ namespace BlackDragon.TimeSheets.Mvc.Controllers
             return View(model);
         }
 
-        // **************************************
-        // URL: /Account/LogOff
-        // **************************************
-
         public ActionResult LogOff()
         {
             FormsService.SignOut();
 
             return RedirectToAction("Index", "Home");
         }
-
-        // **************************************
-        // URL: /Account/Register
-        // **************************************
 
         public ActionResult Register()
         {
@@ -89,17 +82,15 @@ namespace BlackDragon.TimeSheets.Mvc.Controllers
         {
             if (ModelState.IsValid)
             {
-                // Attempt to register the user
-                MembershipCreateStatus createStatus = MembershipService.CreateUser(model.UserName, model.Password, model.Email);
-
-                if (createStatus == MembershipCreateStatus.Success)
+                try
                 {
+                    MembershipService.CreateUser(model);
                     FormsService.SignIn(model.UserName, false /* createPersistentCookie */);
                     return RedirectToAction("Index", "Home");
                 }
-                else
+                catch (DomainException ex)
                 {
-                    ModelState.AddModelError("", AccountValidation.ErrorCodeToString(createStatus));
+                    ModelState.AddModelError("", ex.Message);
                 }
             }
 

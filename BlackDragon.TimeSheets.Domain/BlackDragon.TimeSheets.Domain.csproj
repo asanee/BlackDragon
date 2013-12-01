@@ -48,12 +48,12 @@
     <Compile Include="Infrastructor\ActiveEntity.cs" />
     <Compile Include="Infrastructor\DomainException.cs" />
     <Compile Include="Infrastructor\Entity.cs" />
+    <Compile Include="Interfaces\IMembershipService.cs" />
+    <Compile Include="Interfaces\IUserInformation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Entities\User.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Interface Services\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\BlackDragon.Shared\BlackDragon.Shared.csproj">
       <Project>{F2FBED6A-ABAB-48CB-8D46-D357B63A0071}</Project>

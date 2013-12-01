@@ -14,8 +14,7 @@ namespace BlackDragon.TimeSheets.Domain
 
         }
 
-        public static User Create(string username, 
-            string email, string createdBy)
+        public static User Create(IUserInformation information, string createdBy)
         {
             var target = new User();
 
@@ -24,10 +23,22 @@ namespace BlackDragon.TimeSheets.Domain
             target.Circles = new List<Circle>();
             target.OwnCircles = new List<Circle>();
 
-            target.UserName = username;
-            target.Email = email;
+            target.FirstName = information.FirstName;
+            target.LastName = information.LastName;
+
+            target.UserName = information.UserName;
+            target.Email = information.Email;
+            target.Salt = GenerateSalt();
+            target.HashPassword = Security.Hash(information.Password + target.Salt);
 
             return target;
+        }
+
+        private static string GenerateSalt()
+        {
+            return Guid.NewGuid().ToString()
+                .Replace("-", string.Empty)
+                .Substring(0, 10);
         }
 
         [MaxLength(150)]
@@ -46,5 +57,22 @@ namespace BlackDragon.TimeSheets.Domain
 
         public virtual IList<Circle> Circles { get; private set; }
         public virtual IList<Circle> OwnCircles { get; private set; }
+
+        [Required]
+        [MaxLength(150)]
+        public string Salt { get; set; }
+
+        [Required]
+        public string HashPassword { get; set; }
+
+        public bool IsValidPassword(string password)
+        {
+            return Security.Hash(password + Salt) == HashPassword;
+        }
+
+        public void UpdatePassword(string newPassword)
+        {
+            HashPassword = Security.Hash(newPassword + Salt);
+        }
     }
 }

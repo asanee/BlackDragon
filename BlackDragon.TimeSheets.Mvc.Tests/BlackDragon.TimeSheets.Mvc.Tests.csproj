@@ -62,6 +62,10 @@
     <Content Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BlackDragon.TimeSheets.Domain\BlackDragon.TimeSheets.Domain.csproj">
+      <Project>{6C2B564A-44E6-4773-B56E-1DCD21A5C6B5}</Project>
+      <Name>BlackDragon.TimeSheets.Domain</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BlackDragon.TimeSheets.Mvc\BlackDragon.TimeSheets.Mvc.csproj">
       <Project>{9287430F-CF84-405E-9914-51A6F3AC4953}</Project>
       <Name>BlackDragon.TimeSheets.Mvc</Name>

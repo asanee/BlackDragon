@@ -8,6 +8,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using BlackDragon.TimeSheets.Mvc;
 using BlackDragon.TimeSheets.Mvc.Controllers;
 using BlackDragon.TimeSheets.Mvc.Models;
+using BlackDragon.TimeSheets.Domain;
 
 namespace BlackDragon.TimeSheets.Mvc.Tests.Controllers
 {
@@ -378,23 +379,14 @@ namespace BlackDragon.TimeSheets.Mvc.Tests.Controllers
                 return (userName == "someUser" && password == "goodPassword");
             }
 
-            public MembershipCreateStatus CreateUser(string userName, string password, string email)
-            {
-                if (userName == "duplicateUser")
-                {
-                    return MembershipCreateStatus.DuplicateUserName;
-                }
-
-                // verify that values are what we expected
-                Assert.AreEqual("goodPassword", password);
-                Assert.AreEqual("goodEmail", email);
-
-                return MembershipCreateStatus.Success;
-            }
-
             public bool ChangePassword(string userName, string oldPassword, string newPassword)
             {
                 return (userName == "someUser" && oldPassword == "goodOldPassword" && newPassword == "goodNewPassword");
+            }
+
+            public void CreateUser(IUserInformation information)
+            {
+                throw new NotImplementedException();
             }
         }
 
