@@ -4,6 +4,12 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using StructureMap;
+using BlackDragon.TimeSheets.Dal;
+using BlackDragon.TimeSheets.Applications;
+using BlackDragon.TimeSheets.Shared;
+using StructureMap.Configuration.DSL;
+using BlackDragon.TimeSheets.Mvc.Models;
 
 namespace BlackDragon.TimeSheets.Mvc
 {
@@ -27,8 +33,38 @@ namespace BlackDragon.TimeSheets.Mvc
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
+            Action<IInitializationExpression> action = x => 
+                {
+                    var registry = new Registry();
+
+                    registry.For<Applications.IContext>()
+                        .HybridHttpOrThreadLocalScoped()
+                        .Use<TimeSheetContext>();
+
+                    x.AddRegistry(registry);
+
+                    x.For<IMembershipService>().Use<MembershipService>();
+                    x.For<IProfileService>().Use<ProfileService>();
+                    x.For<IFormsAuthenticationService>()
+                        .Use<FormsAuthenticationService>();
+                };
+
+            ObjectFactory.Initialize(action);
+
+            ControllerBuilder.Current.SetControllerFactory(new ControllerFactory());
 
             RegisterRoutes(RouteTable.Routes);
+        }
+    }
+
+    class ControllerFactory: DefaultControllerFactory
+    {
+        protected override IController GetControllerInstance(RequestContext requestContext, Type controllerType)
+        {
+            if (requestContext == null || controllerType == null)
+                return null;
+
+            return (IController)ObjectFactory.GetInstance(controllerType);
         }
     }
 }

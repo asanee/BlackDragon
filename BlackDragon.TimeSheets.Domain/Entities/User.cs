@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using BlackDragon.Shared;
 using System.ComponentModel.DataAnnotations;
+
+using BlackDragon.Shared;
+using BlackDragon.TimeSheets.Shared;
 
 namespace BlackDragon.TimeSheets.Domain
 {

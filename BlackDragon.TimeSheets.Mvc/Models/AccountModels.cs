@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using System.Web.Security;
 using BlackDragon.Shared;
 using BlackDragon.TimeSheets.Domain;
+using BlackDragon.TimeSheets.Shared;
 
 namespace BlackDragon.TimeSheets.Mvc.Models
 {

@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{3FA20BB6-8601-4F91-94BE-38E99C8C228B}</ProjectGuid>
+    <ProjectGuid>{52789A9D-4040-48E6-A79C-34874DC7B2AF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BlackDragon.TimeSheets.Applications</RootNamespace>
-    <AssemblyName>BlackDragon.TimeSheets.Applications</AssemblyName>
+    <RootNamespace>BlackDragon.TimeSheets.Shared</RootNamespace>
+    <AssemblyName>BlackDragon.TimeSheets.Shared</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -40,22 +40,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApplicationExtensions.cs" />
-    <Compile Include="IContext.cs" />
-    <Compile Include="MembershipService.cs" />
-    <Compile Include="ProfileService.cs" />
+    <Compile Include="Interfaces\IMembershipService.cs" />
+    <Compile Include="Interfaces\IProfileService.cs" />
+    <Compile Include="Interfaces\IUserInformation.cs" />
+    <Compile Include="ProfileFacadeDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UserDto.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\BlackDragon.TimeSheets.Domain\BlackDragon.TimeSheets.Domain.csproj">
-      <Project>{6C2B564A-44E6-4773-B56E-1DCD21A5C6B5}</Project>
-      <Name>BlackDragon.TimeSheets.Domain</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\BlackDragon.TimeSheets.Shared\BlackDragon.TimeSheets.Shared.csproj">
-      <Project>{52789A9D-4040-48E6-A79C-34874DC7B2AF}</Project>
-      <Name>BlackDragon.TimeSheets.Shared</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

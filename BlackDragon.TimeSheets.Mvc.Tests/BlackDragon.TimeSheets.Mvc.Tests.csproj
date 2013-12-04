@@ -70,6 +70,10 @@
       <Project>{9287430F-CF84-405E-9914-51A6F3AC4953}</Project>
       <Name>BlackDragon.TimeSheets.Mvc</Name>
     </ProjectReference>
+    <ProjectReference Include="..\BlackDragon.TimeSheets.Shared\BlackDragon.TimeSheets.Shared.csproj">
+      <Project>{52789A9D-4040-48E6-A79C-34874DC7B2AF}</Project>
+      <Name>BlackDragon.TimeSheets.Shared</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

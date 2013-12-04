@@ -9,8 +9,7 @@ using System.Web.Routing;
 using System.Web.Security;
 using BlackDragon.TimeSheets.Mvc.Models;
 using BlackDragon.TimeSheets.Domain;
-using BlackDragon.TimeSheets.Applications;
-using BlackDragon.TimeSheets.Dal;
+using BlackDragon.TimeSheets.Shared;
 
 namespace BlackDragon.TimeSheets.Mvc.Controllers
 {
@@ -18,18 +17,14 @@ namespace BlackDragon.TimeSheets.Mvc.Controllers
     [HandleError]
     public class AccountController : Controller
     {
+        public IFormsAuthenticationService FormsService { get; private set; }
+        public IMembershipService MembershipService { get; private set; }
 
-        public IFormsAuthenticationService FormsService { get; set; }
-        public IMembershipService MembershipService { get; set; }
-
-        protected override void Initialize(RequestContext requestContext)
+        public AccountController(IFormsAuthenticationService formsService,
+            IMembershipService membershipService)
         {
-            if (FormsService == null) { FormsService = new FormsAuthenticationService(); }
-
-            if (MembershipService == null)
-            { MembershipService = new MembershipService(new TimeSheetContext()); }
-
-            base.Initialize(requestContext);
+            this.FormsService = formsService;
+            this.MembershipService = membershipService;
         }
 
         public ActionResult LogOn()
@@ -139,6 +134,5 @@ namespace BlackDragon.TimeSheets.Mvc.Controllers
         {
             return View();
         }
-
     }
 }

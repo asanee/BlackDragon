@@ -9,6 +9,7 @@ using BlackDragon.TimeSheets.Mvc;
 using BlackDragon.TimeSheets.Mvc.Controllers;
 using BlackDragon.TimeSheets.Mvc.Models;
 using BlackDragon.TimeSheets.Domain;
+using BlackDragon.TimeSheets.Shared;
 
 namespace BlackDragon.TimeSheets.Mvc.Tests.Controllers
 {
@@ -317,11 +318,7 @@ namespace BlackDragon.TimeSheets.Mvc.Tests.Controllers
 
         private static AccountController GetAccountController()
         {
-            AccountController controller = new AccountController()
-            {
-                FormsService = new MockFormsAuthenticationService(),
-                MembershipService = new MockMembershipService()
-            };
+            var controller = new AccountController(new MockFormsAuthenticationService(), new MockMembershipService());
             controller.ControllerContext = new ControllerContext()
             {
                 Controller = controller,

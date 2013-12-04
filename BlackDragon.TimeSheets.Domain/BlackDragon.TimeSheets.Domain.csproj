@@ -48,8 +48,6 @@
     <Compile Include="Infrastructor\ActiveEntity.cs" />
     <Compile Include="Infrastructor\DomainException.cs" />
     <Compile Include="Infrastructor\Entity.cs" />
-    <Compile Include="Interfaces\IMembershipService.cs" />
-    <Compile Include="Interfaces\IUserInformation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Entities\User.cs" />
   </ItemGroup>
@@ -58,6 +56,10 @@
     <ProjectReference Include="..\BlackDragon.Shared\BlackDragon.Shared.csproj">
       <Project>{F2FBED6A-ABAB-48CB-8D46-D357B63A0071}</Project>
       <Name>BlackDragon.Shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BlackDragon.TimeSheets.Shared\BlackDragon.TimeSheets.Shared.csproj">
+      <Project>{52789A9D-4040-48E6-A79C-34874DC7B2AF}</Project>
+      <Name>BlackDragon.TimeSheets.Shared</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
