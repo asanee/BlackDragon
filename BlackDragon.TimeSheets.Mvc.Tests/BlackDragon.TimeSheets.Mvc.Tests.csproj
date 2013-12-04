@@ -49,7 +49,10 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Web.Abstractions" />
-    <Reference Include="System.Web.Mvc, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.4.0.20710.0\lib\net40\System.Web.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -67,7 +70,7 @@
       <Name>BlackDragon.TimeSheets.Domain</Name>
     </ProjectReference>
     <ProjectReference Include="..\BlackDragon.TimeSheets.Mvc\BlackDragon.TimeSheets.Mvc.csproj">
-      <Project>{9287430F-CF84-405E-9914-51A6F3AC4953}</Project>
+      <Project>{F0C128DB-0B22-45FE-A839-3FD479A7747E}</Project>
       <Name>BlackDragon.TimeSheets.Mvc</Name>
     </ProjectReference>
     <ProjectReference Include="..\BlackDragon.TimeSheets.Shared\BlackDragon.TimeSheets.Shared.csproj">

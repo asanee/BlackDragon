@@ -136,7 +136,7 @@ namespace BlackDragon.TimeSheets.Mvc.Tests.Controllers
             AccountController controller = GetAccountController();
 
             // Act
-            ActionResult result = controller.LogOn();
+            ActionResult result = controller.Login();
 
             // Assert
             Assert.IsInstanceOfType(result, typeof(ViewResult));
@@ -147,7 +147,7 @@ namespace BlackDragon.TimeSheets.Mvc.Tests.Controllers
         {
             // Arrange
             AccountController controller = GetAccountController();
-            LogOnModel model = new LogOnModel()
+            LoginModel model = new LoginModel()
             {
                 UserName = "someUser",
                 Password = "goodPassword",
@@ -155,7 +155,7 @@ namespace BlackDragon.TimeSheets.Mvc.Tests.Controllers
             };
 
             // Act
-            ActionResult result = controller.LogOn(model, null);
+            ActionResult result = controller.Login(model, null);
 
             // Assert
             Assert.IsInstanceOfType(result, typeof(RedirectToRouteResult));
@@ -170,7 +170,7 @@ namespace BlackDragon.TimeSheets.Mvc.Tests.Controllers
         {
             // Arrange
             AccountController controller = GetAccountController();
-            LogOnModel model = new LogOnModel()
+            LoginModel model = new LoginModel()
             {
                 UserName = "someUser",
                 Password = "goodPassword",
@@ -178,7 +178,7 @@ namespace BlackDragon.TimeSheets.Mvc.Tests.Controllers
             };
 
             // Act
-            ActionResult result = controller.LogOn(model, "/someUrl");
+            ActionResult result = controller.Login(model, "/someUrl");
 
             // Assert
             Assert.IsInstanceOfType(result, typeof(RedirectResult));
@@ -192,7 +192,7 @@ namespace BlackDragon.TimeSheets.Mvc.Tests.Controllers
         {
             // Arrange
             AccountController controller = GetAccountController();
-            LogOnModel model = new LogOnModel()
+            LoginModel model = new LoginModel()
             {
                 UserName = "someUser",
                 Password = "goodPassword",
@@ -201,7 +201,7 @@ namespace BlackDragon.TimeSheets.Mvc.Tests.Controllers
             controller.ModelState.AddModelError("", "Dummy error message.");
 
             // Act
-            ActionResult result = controller.LogOn(model, null);
+            ActionResult result = controller.Login(model, null);
 
             // Assert
             Assert.IsInstanceOfType(result, typeof(ViewResult));
@@ -214,7 +214,7 @@ namespace BlackDragon.TimeSheets.Mvc.Tests.Controllers
         {
             // Arrange
             AccountController controller = GetAccountController();
-            LogOnModel model = new LogOnModel()
+            LoginModel model = new LoginModel()
             {
                 UserName = "someUser",
                 Password = "badPassword",
@@ -222,7 +222,7 @@ namespace BlackDragon.TimeSheets.Mvc.Tests.Controllers
             };
 
             // Act
-            ActionResult result = controller.LogOn(model, null);
+            ActionResult result = controller.Login(model, null);
 
             // Assert
             Assert.IsInstanceOfType(result, typeof(ViewResult));
