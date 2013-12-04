@@ -10,6 +10,7 @@ using BlackDragon.TimeSheets.Applications;
 using BlackDragon.TimeSheets.Shared;
 using StructureMap.Configuration.DSL;
 using BlackDragon.TimeSheets.Mvc.Models;
+using StructureMap.Pipeline;
 
 namespace BlackDragon.TimeSheets.Mvc
 {
@@ -65,6 +66,13 @@ namespace BlackDragon.TimeSheets.Mvc
                 return null;
 
             return (IController)ObjectFactory.GetInstance(controllerType);
+        }
+
+        public override void ReleaseController(IController controller)
+        {
+            HttpContextLifecycle.DisposeAndClearAll();
+
+            base.ReleaseController(controller);
         }
     }
 }

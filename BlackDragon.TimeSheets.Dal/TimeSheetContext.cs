@@ -26,9 +26,17 @@ namespace BlackDragon.TimeSheets.Dal
             base.OnModelCreating(modelBuilder);
         }
 
+        public static int ContextCount { get; private set; }
+
         public TimeSheetContext():base("TimeSheet")
         {
+            ContextCount++;
+        }
 
+        protected override void Dispose(bool disposing)
+        {
+            ContextCount--;
+            base.Dispose(disposing);
         }
 
         public IQueryable<T> Query<T>() where T : Entity
