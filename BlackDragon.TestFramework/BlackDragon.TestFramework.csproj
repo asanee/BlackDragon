@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{F2FBED6A-ABAB-48CB-8D46-D357B63A0071}</ProjectGuid>
+    <ProjectGuid>{2ABAAED2-B5F2-42D1-AD36-9F3EF84AA0BB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BlackDragon.Shared</RootNamespace>
-    <AssemblyName>BlackDragon.Shared</AssemblyName>
+    <RootNamespace>BlackDragon.TestFramework</RootNamespace>
+    <AssemblyName>BlackDragon.TestFramework</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,8 +31,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Moq">
+      <HintPath>..\packages\Moq.4.1.1311.0615\lib\net40\Moq.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -41,11 +44,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EmailAttribute.cs" />
+    <Compile Include="Asserts.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Reflections.cs" />
-    <Compile Include="Security.cs" />
-    <Compile Include="Validation.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BlackDragon.Shared\BlackDragon.Shared.csproj">
+      <Project>{F2FBED6A-ABAB-48CB-8D46-D357B63A0071}</Project>
+      <Name>BlackDragon.Shared</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

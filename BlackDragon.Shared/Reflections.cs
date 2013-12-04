@@ -5,7 +5,7 @@ using System.Text;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace BlackDragon.DalFramework
+namespace BlackDragon.Shared
 {
     public static class Reflections
     {

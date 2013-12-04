@@ -44,10 +44,10 @@ namespace BlackDragon.TimeSheets.Domain
         }
 
         [MaxLength(150)]
-        public virtual string FirstName { get; set; }
+        public virtual string FirstName { get; private set; }
 
         [MaxLength(150)]
-        public virtual string LastName { get; set; }
+        public virtual string LastName { get; private set; }
 
         [Required]
         [MaxLength(150)]
@@ -55,17 +55,17 @@ namespace BlackDragon.TimeSheets.Domain
 
         [Email]
         [Required]
-        public virtual string Email { get; set; }
+        public virtual string Email { get; private set; }
 
         public virtual IList<Circle> Circles { get; private set; }
         public virtual IList<Circle> OwnCircles { get; private set; }
 
         [Required]
         [MaxLength(150)]
-        public string Salt { get; set; }
+        public virtual string Salt { get; private set; }
 
         [Required]
-        public string HashPassword { get; set; }
+        public virtual string HashPassword { get; protected set; }
 
         public bool IsValidPassword(string password)
         {

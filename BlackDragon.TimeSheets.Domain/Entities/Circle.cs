@@ -22,6 +22,7 @@ namespace BlackDragon.TimeSheets.Domain
             var target = new Circle();
 
             target.Init(owner.UserName);
+            target.Owner = owner;
             target.Name = name;
 
             return target;
@@ -29,7 +30,7 @@ namespace BlackDragon.TimeSheets.Domain
 
         [MaxLength(100)]
         [Required]
-        public virtual string Name { get; set; }
+        public virtual string Name { get; private set; }
 
         public virtual User Owner { get; private set; }
 

@@ -6,6 +6,7 @@ using System.Data.Entity.Migrations;
 using System.Linq.Expressions;
 using System.Data.Entity.Migrations.Model;
 using System.Data.Entity.Migrations.Builders;
+using BlackDragon.Shared;
 
 namespace BlackDragon.DalFramework
 {
