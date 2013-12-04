@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationExtensions.cs" />
+    <Compile Include="ApplicationServiceException.cs" />
     <Compile Include="IContext.cs" />
     <Compile Include="MembershipService.cs" />
     <Compile Include="ProfileService.cs" />

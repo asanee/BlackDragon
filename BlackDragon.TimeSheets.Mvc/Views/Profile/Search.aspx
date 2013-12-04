@@ -18,7 +18,8 @@
         <% foreach (var result in Model.Results) {%>
         <tr>
             <td>
-                <%: Html.DisplayFor(model => result.FullName) %>
+                <%: Html.ActionLink(result.FullName, "View",
+                    "Profile", new { userName = result.UserName}, null)%>
             </td>
         </tr>
         <% }%>

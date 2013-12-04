@@ -29,5 +29,12 @@ namespace BlackDragon.TimeSheets.Mvc.Controllers
         {
             return View(new SearchProfileModel());
         }
+
+        public new ActionResult View(string userName)
+        {
+            FullProfileDto profile = ProfileService.GetFullProfile(userName);
+
+            return View(profile);
+        }
     }
 }

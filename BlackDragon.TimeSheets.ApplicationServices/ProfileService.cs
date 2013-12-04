@@ -33,5 +33,23 @@ namespace BlackDragon.TimeSheets.Applications
         }
 
         public IContext Context { get; set; }
+
+        public FullProfileDto GetFullProfile(string userName)
+        {
+            var user = Context.Query<User>().FirstOrDefault(x => 
+                x.UserName == userName);
+
+            if (user == null)
+                throw new ApplicationServiceException("User is not found.");
+
+            return new FullProfileDto
+            {
+                UserName = user.UserName,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                OwnCircles = user.OwnCircles.Select(x=> x.Name).ToList()
+            };
+        }
     }
 }

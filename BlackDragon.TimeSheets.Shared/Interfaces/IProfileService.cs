@@ -8,5 +8,7 @@ namespace BlackDragon.TimeSheets.Shared
     public interface IProfileService
     {
         IList<ProfileFacadeDto> Search(string query, int skip, int take);
+
+        FullProfileDto GetFullProfile(string userName);
     }
 }
