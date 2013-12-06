@@ -8,6 +8,7 @@ using BlackDragon.TimeSheets.Shared;
 
 namespace BlackDragon.TimeSheets.Mvc.Controllers
 {
+    [HandleError]
     public class ProfileController : Controller
     {
         public IProfileService ProfileService { get; private set; }
@@ -17,17 +18,41 @@ namespace BlackDragon.TimeSheets.Mvc.Controllers
             ProfileService = profileService;
         }
 
+        private const int PageSize = 1;
+
         [HttpPost]
         public ActionResult Search(SearchProfileModel search)
         {
-            search.Results = ProfileService.Search(search.Query, 0, 100);
+            var result = ProfileService.Search(search.Query,
+                1, PageSize);
+
+            search.IsSearched = true;
+            search.Results = result;
+            search.TotalPages = result.TotalPages;
+            search.PageSize = result.PageSize;
+            search.CurrentPage = result.CurrentPage;
 
             return View(search);
         }
 
-        public ActionResult Search()
+        public ActionResult Search(string currentFilter, int? currentPage, int? pageSize)
         {
-            return View(new SearchProfileModel());
+            if (string.IsNullOrWhiteSpace(currentFilter))
+                return View(new SearchProfileModel());
+
+            var search = new SearchProfileModel();
+
+            var result = ProfileService.Search(currentFilter,
+                currentPage, pageSize);
+
+            search.IsSearched = true;
+            search.Query = currentFilter;
+            search.Results = result;
+            search.TotalPages = result.TotalPages;
+            search.PageSize = result.PageSize;
+            search.CurrentPage = result.CurrentPage;
+
+            return View(search);
         }
 
         public new ActionResult View(string userName)

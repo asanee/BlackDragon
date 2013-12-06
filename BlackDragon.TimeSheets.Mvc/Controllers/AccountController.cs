@@ -17,7 +17,6 @@ using System.Transactions;
 
 namespace BlackDragon.TimeSheets.Mvc.Controllers
 {
-
     [HandleError]
     public class AccountController : Controller
     {

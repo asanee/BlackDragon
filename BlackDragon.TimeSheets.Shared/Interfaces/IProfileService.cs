@@ -7,7 +7,7 @@ namespace BlackDragon.TimeSheets.Shared
 {
     public interface IProfileService
     {
-        IList<ProfileFacadeDto> Search(string query, int skip, int take);
+        PagedList<ProfileFacadeDto> Search(string query, int? currentPage, int? pageSize);
 
         FullProfileDto GetFullProfile(string userName);
     }

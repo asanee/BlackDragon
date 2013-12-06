@@ -1,17 +1,13 @@
 ﻿@model BlackDragon.TimeSheets.Mvc.Models.SearchProfileModel
 @{
-    ViewBag.Title = "View1";
+    ViewBag.Title = "Search";
 }
 <h2>
     Search</h2>
 @{using (Html.BeginForm())
   {
-      @Html.LabelFor(x => x.Query);
-      @Html.EditorFor(x => x.Query);
-      @Html.ValidationMessageFor(x => x.Query);
+    @Html.EditorFor(x => x.Query);
   }
-    <button type="submit">
-        Search</button>
 }
 <table id="user-index">
     @foreach (var result in Model.Results)
@@ -24,3 +20,30 @@
         </tr>
     }
 </table>
+<br />
+@if (Model.Results.Any())
+{
+    <p>
+        Page @Model.CurrentPage
+        of @Model.TotalPages</p>
+}
+else if (Model.IsSearched)
+{
+    <p>
+        No Result Found
+    </p>
+}
+@if (Model.CanGoPrevious)
+{
+    @Html.ActionLink("First", "Search", "Profile",
+                new { currentPage = 1, currentFilter = Model.Query, pageSize = Model.PageSize }, null)
+    @Html.ActionLink("Previous", "Search", "Profile",
+            new { currentPage = Model.CurrentPage - 1, currentFilter = Model.Query, pageSize = Model.PageSize }, null)
+}
+@if (Model.CanGoNext)
+{
+    @Html.ActionLink("Next", "Search", "Profile",
+                new { currentPage = Model.CurrentPage + 1, currentFilter = Model.Query, pageSize = Model.PageSize }, null)
+    @Html.ActionLink("Last", "Search", "Profile",
+                        new { currentPage = Model.TotalPages, currentFilter = Model.Query, pageSize = Model.PageSize }, null)
+}

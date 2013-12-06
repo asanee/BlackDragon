@@ -14,29 +14,27 @@ namespace BlackDragon.TimeSheets.Applications
             this.Context = context;
         }
 
-        public IList<ProfileFacadeDto> Search(string query, int skip, int take)
+        public PagedList<ProfileFacadeDto> Search(string query, int? currentPage, int? pageSize)
         {
-            var users = Context.Query<User>().Where(x => 
-                x.UserName.Contains(query) || 
-                x.FirstName.Contains(query) || 
+            var users = Context.Query<User>().Where(x =>
+                x.UserName.Contains(query) ||
+                x.FirstName.Contains(query) ||
                 x.LastName.Contains(query))
-                .OrderByDescending(x => x.ID)
-                .Skip(skip)
-                .Take(take)
-                .ToList();
+                .OrderByDescending(x => x.ID);
 
-            return users.Select(x => new ProfileFacadeDto
+            return PagedList<ProfileFacadeDto>.Create(users,
+                x => new ProfileFacadeDto
             {
                 FullName = x.FirstName + " " + x.LastName,
                 UserName = x.UserName
-            }).ToList();
+            }, pageSize ?? 1, currentPage ?? 1);
         }
 
         public IContext Context { get; set; }
 
         public FullProfileDto GetFullProfile(string userName)
         {
-            var user = Context.Query<User>().FirstOrDefault(x => 
+            var user = Context.Query<User>().FirstOrDefault(x =>
                 x.UserName == userName);
 
             if (user == null)
@@ -48,7 +46,7 @@ namespace BlackDragon.TimeSheets.Applications
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Email = user.Email,
-                OwnCircles = user.OwnCircles.Select(x=> x.Name).ToList()
+                OwnCircles = user.OwnCircles.Select(x => x.Name).ToList()
             };
         }
     }

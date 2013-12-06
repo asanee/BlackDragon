@@ -22,5 +22,15 @@ namespace BlackDragon.TimeSheets.Mvc.Models
 
         public string Query { get; set; }
         public IList<ProfileFacadeDto> Results { get; set; }
+
+        public int TotalPages { get; set; }
+        public int PageSize { get; set; }
+        public int CurrentPage { get; set; }
+
+        public bool CanGoNext { get { return CurrentPage < TotalPages; } }
+
+        public bool CanGoPrevious { get { return CurrentPage > 1; } }
+
+        public bool IsSearched { get; set; }
     }
 }

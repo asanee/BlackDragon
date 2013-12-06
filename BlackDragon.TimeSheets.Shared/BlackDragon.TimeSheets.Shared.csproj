@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\PagedList.cs" />
     <Compile Include="Dtos\FullProfileDto.cs" />
     <Compile Include="Interfaces\IMembershipService.cs" />
     <Compile Include="Interfaces\IProfileService.cs" />
