@@ -44,6 +44,7 @@ namespace BlackDragon.TimeSheets.Mvc
                 x.For<IProfileService>().Use<ProfileService>();
                 x.For<IFormsAuthenticationService>()
                     .Use<FormsAuthenticationService>();
+                x.For<ICircleService>().Use<CircleService>();
             };
 
             ObjectFactory.Initialize(action);

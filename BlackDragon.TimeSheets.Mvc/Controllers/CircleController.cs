@@ -3,30 +3,37 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using BlackDragon.TimeSheets.Mvc.Models;
+using BlackDragon.TimeSheets.Domain;
+using BlackDragon.TimeSheets.Shared;
+using System.Web.Routing;
 
 namespace BlackDragon.TimeSheets.Mvc.Controllers
 {
+    [HandleError]
     public class CircleController : Controller
     {
-        //
-        // GET: /Circle/
+        public CircleController(ICircleService service)
+        {
+            CircleService = service;
+        }
 
         public ActionResult Index()
         {
             return View();
         }
-
-        //
-        // GET: /Circle/Details/5
-
-        public ActionResult Details(int id)
+                
+        public ActionResult Details(long id)
         {
-            return View();
+            var circle = CircleService.GetCircle(id, User.Identity.Name);
+
+            return View(circle);
         }
 
         //
         // GET: /Circle/Create
 
+        [Authorize]
         public ActionResult Create()
         {
             return View();
@@ -35,17 +42,25 @@ namespace BlackDragon.TimeSheets.Mvc.Controllers
         //
         // POST: /Circle/Create
 
+        [Authorize]
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(CircleFullDto model)
         {
+            if (!ModelState.IsValid)
+                return View();
             try
             {
-                // TODO: Add insert logic here
+                var circle = CircleService.Create(model.Name, User.Identity.Name);
 
-                return RedirectToAction("Index");
+                var dict = new RouteValueDictionary();
+
+                dict.Add("id", circle.ID);
+
+                return RedirectToAction("Details", "Circle", routeValues: dict );
             }
-            catch
+            catch(DomainException ex)
             {
+                ModelState.AddModelError("", ex.Message);
                 return View();
             }
         }
@@ -62,7 +77,7 @@ namespace BlackDragon.TimeSheets.Mvc.Controllers
         // POST: /Circle/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(long id, FormCollection collection)
         {
             try
             {
@@ -78,8 +93,8 @@ namespace BlackDragon.TimeSheets.Mvc.Controllers
 
         //
         // GET: /Circle/Delete/5
- 
-        public ActionResult Delete(int id)
+
+        public ActionResult Delete(long id)
         {
             return View();
         }
@@ -88,7 +103,7 @@ namespace BlackDragon.TimeSheets.Mvc.Controllers
         // POST: /Circle/Delete/5
 
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(long id, FormCollection collection)
         {
             try
             {
@@ -101,5 +116,7 @@ namespace BlackDragon.TimeSheets.Mvc.Controllers
                 return View();
             }
         }
+
+        public ICircleService CircleService { get; private set; }
     }
 }

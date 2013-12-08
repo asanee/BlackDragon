@@ -1,0 +1,61 @@
+﻿@model BlackDragon.TimeSheets.Shared.CircleFullDto
+@{
+    ViewBag.Title = "Details";
+}
+<h2>
+    Details</h2>
+<fieldset>
+    <legend>CircleModel</legend>
+    <div class="display-label">
+        @Html.DisplayNameFor(model => model.Name): @Html.DisplayFor(model => model.Name)
+    </div>
+    <div class="display-field">
+        Owner: @Html.DisplayFor(model => model.Owner.FullName)
+    </div>
+</fieldset>
+@if (Model.Members.Count > 0)
+{
+    <table>
+        @foreach (var member in Model.Members)
+        {
+            <tr>
+                <td>
+                    @member.FullName
+                </td>
+            </tr>
+        }
+    </table>
+}
+@if (Model.Documents.Count > 0)
+{
+    <table>
+        <tr>
+            <th>
+                Document Name
+            </th>
+            <th>
+                Size
+            </th>
+        </tr>
+        @foreach (var doc in Model.Documents)
+        {
+            <tr>
+                <td>
+                    @doc.Name
+                </td>
+                <td>
+                    @doc.Size
+                </td>
+            </tr>
+        }
+    </table>
+}
+<p>
+    @if (Model.CanJoin)
+    {
+        <input id="btnJoin" type="button" value="button" onclick="" />
+    }
+    
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

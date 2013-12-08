@@ -7,11 +7,10 @@ using BlackDragon.TimeSheets.Domain;
 
 namespace BlackDragon.TimeSheets.Applications
 {
-    public class ProfileService : IProfileService
+    public class ProfileService : BaseService, IProfileService
     {
-        public ProfileService(IContext context)
+        public ProfileService(IContext context): base(context)
         {
-            this.Context = context;
         }
 
         public PagedList<ProfileFacadeDto> Search(string query, int? currentPage, int? pageSize)
@@ -23,14 +22,8 @@ namespace BlackDragon.TimeSheets.Applications
                 .OrderByDescending(x => x.ID);
 
             return PagedList<ProfileFacadeDto>.Create(users,
-                x => new ProfileFacadeDto
-            {
-                FullName = x.FirstName + " " + x.LastName,
-                UserName = x.UserName
-            }, pageSize ?? 1, currentPage ?? 1);
+                x => GetFacadeDto(x), pageSize ?? 1, currentPage ?? 1);
         }
-
-        public IContext Context { get; set; }
 
         public FullProfileDto GetFullProfile(string userName)
         {
@@ -40,14 +33,7 @@ namespace BlackDragon.TimeSheets.Applications
             if (user == null)
                 throw new ApplicationServiceException("User is not found.");
 
-            return new FullProfileDto
-            {
-                UserName = user.UserName,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Email = user.Email,
-                OwnCircles = user.OwnCircles.Select(x => x.Name).ToList()
-            };
+            return GetFullDto(user);
         }
     }
 }

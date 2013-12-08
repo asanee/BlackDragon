@@ -33,17 +33,34 @@ else if (Model.IsSearched)
         No Result Found
     </p>
 }
-@if (Model.CanGoPrevious)
+@using (Html.BeginForm("Paging", "Profile", new { currentFilter = Model.Query, pageSize = Model.PageSize }))
 {
-    @Html.ActionLink("First", "Search", "Profile",
-                new { currentPage = 1, currentFilter = Model.Query, pageSize = Model.PageSize }, null)
-    @Html.ActionLink("Previous", "Search", "Profile",
-            new { currentPage = Model.CurrentPage - 1, currentFilter = Model.Query, pageSize = Model.PageSize }, null)
-}
-@if (Model.CanGoNext)
-{
-    @Html.ActionLink("Next", "Search", "Profile",
-                new { currentPage = Model.CurrentPage + 1, currentFilter = Model.Query, pageSize = Model.PageSize }, null)
-    @Html.ActionLink("Last", "Search", "Profile",
-                        new { currentPage = Model.TotalPages, currentFilter = Model.Query, pageSize = Model.PageSize }, null)
+    @Html.AntiForgeryToken()
+    <fieldset id="socialLoginList">
+        @if (Model.CanGoPrevious)
+        {
+            <button type="submit" name="currentPage" value="1" title="First">
+                First</button>
+            <button type="submit" name="currentPage" value="@(Model.CurrentPage - 1)" title="Previous">
+                Previous</button>
+        }
+        else if (Model.IsSearched && Model.Results.Any())
+        {
+            <button disabled="disabled">First</button>
+            <button disabled="disabled">Previous</button>
+        }
+
+        @if (Model.CanGoNext)
+        {
+            <button type="submit" name="currentPage" value="@(Model.CurrentPage + 1)" title="Next">
+                Next</button>
+            <button type="submit" name="currentPage" value="Model.TotalPages" title="Last">
+                Last</button>
+        }
+        else if (Model.IsSearched && Model.Results.Any())
+        {
+            <button disabled="disabled">Next</button>
+            <button disabled="disabled">Last</button>
+        }
+    </fieldset>    
 }

@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using BlackDragon.TimeSheets.Shared;
 
 namespace BlackDragon.TimeSheets.Domain
 {
     /// <summary>
     /// Social Circle
     /// </summary>
-    public class Circle: ActiveEntity
+    public class Circle: ActiveEntity, ICircle
     {
         protected Circle()
         {
@@ -32,10 +33,16 @@ namespace BlackDragon.TimeSheets.Domain
         [Required]
         public virtual string Name { get; private set; }
 
+        public virtual bool IsPublic { get; set; }
+
         public virtual User Owner { get; private set; }
 
         public virtual long OwnerId { get; private set; }
 
         public virtual IList<User> Users { get; private set; }
+
+        public virtual IList<User> Requestors { get; private set; }
+
+        public virtual ICollection<Document> Documents { get; private set; }
     }
 }

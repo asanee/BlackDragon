@@ -35,7 +35,8 @@ namespace BlackDragon.TimeSheets.Mvc.Controllers
             return View(search);
         }
 
-        public ActionResult Search(string currentFilter, int? currentPage, int? pageSize)
+        [HttpPost]
+        public ActionResult Paging(int currentPage, string currentFilter, int? pageSize)
         {
             if (string.IsNullOrWhiteSpace(currentFilter))
                 return View(new SearchProfileModel());
@@ -52,7 +53,12 @@ namespace BlackDragon.TimeSheets.Mvc.Controllers
             search.PageSize = result.PageSize;
             search.CurrentPage = result.CurrentPage;
 
-            return View(search);
+            return View("Search", search);
+        }
+
+        public ActionResult Search()
+        {
+            return View(new SearchProfileModel());
         }
 
         public new ActionResult View(string userName)

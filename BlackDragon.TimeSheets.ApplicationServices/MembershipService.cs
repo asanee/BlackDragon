@@ -7,11 +7,12 @@ using BlackDragon.TimeSheets.Shared;
 
 namespace BlackDragon.TimeSheets.Applications
 {
-    public class MembershipService : IMembershipService
+    public class MembershipService : BaseService, IMembershipService
     {
         public MembershipService(IContext context)
+            : base(context)
         {
-            Context = context;
+
         }
 
         public int MinPasswordLength
@@ -59,7 +60,5 @@ namespace BlackDragon.TimeSheets.Applications
 
             return true;
         }
-
-        public IContext Context { get; set; }
     }
 }
