@@ -25,7 +25,7 @@
                             <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                             @if (User.Identity.IsAuthenticated)
                             {
-                                <li>@Html.ActionLink("Profile", "Profile", "Search")</li>
+                                <li>@Html.ActionLink("Profile", "Search", "Profile")</li>
                             }
                         </ul>
                     </nav>

@@ -22,6 +22,22 @@ namespace BlackDragon.TimeSheets.Mvc.Controllers
         {
             return View();
         }
+
+        [HttpPost]
+        public JsonResult Join(long id)
+        {
+            CircleService.Join(id, User.Identity.Name);
+
+            return Json(false);
+        }
+        
+        [HttpPost]
+        public JsonResult Grant(long id, string userName)
+        {
+            CircleService.Grant(id,userName, User.Identity.Name);
+
+            return Json(false);
+        }
                 
         public ActionResult Details(long id)
         {

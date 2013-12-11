@@ -10,7 +10,13 @@ namespace BlackDragon.TimeSheets.Shared
     {
         public long ID { get; set; }
 
-        public bool CanJoin { get; set; }
+        public bool CanJoin
+        {
+            get
+            {
+                return !(IsOwner || IsAdded || IsRequested);
+            }
+        }
 
         [Required]
         [StringLength(50)]
@@ -18,8 +24,16 @@ namespace BlackDragon.TimeSheets.Shared
 
         public IList<ProfileFacadeDto> Members { get; set; }
 
+        public IList<ProfileFacadeDto> Requestors { get; set; }
+
         public ProfileFacadeDto Owner { get; set; }
 
         public IList<DocumentFacadeDto> Documents { get; set; }
+
+        public bool IsOwner { get; set; }
+
+        public bool IsAdded { get; set; }
+
+        public bool IsRequested { get; set; }
     }
 }

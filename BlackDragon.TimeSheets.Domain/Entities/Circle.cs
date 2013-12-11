@@ -25,6 +25,7 @@ namespace BlackDragon.TimeSheets.Domain
             target.Init(owner.UserName);
             target.Owner = owner;
             target.Name = name;
+            target.IsPublic = true;
 
             return target;
         }

@@ -13,6 +13,10 @@ namespace BlackDragon.TimeSheets.Dal
         public CircleConfiguration()
         {
             this.ToTable("Circles");
+
+            this.HasMany(x => x.Requestors)
+                .WithMany()
+                .Map(x => x.ToTable("RequestorCircles"));
         }
     }
 }

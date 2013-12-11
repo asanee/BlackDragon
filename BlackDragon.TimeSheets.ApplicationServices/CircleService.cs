@@ -49,17 +49,25 @@ namespace BlackDragon.TimeSheets.Applications
 
             bool isOwner = circle.Owner.UserName == userName;
             bool isAdded = circle.Users.Any(x => x.UserName == userName);
+            bool isRequested = circle.Requestors.Any(x => x.UserName == userName);
 
             if (!(circle.IsPublic || isOwner || isAdded))
                 throw new ApplicationServiceException("Unauthorized to access circle");
 
             var dto = new CircleFullDto();
 
+            dto.IsOwner = isOwner;
+            dto.IsAdded = isAdded;
+            dto.IsRequested = isRequested;
+
             dto.Documents = circle.Documents
                 .Select(GetFacadeDto).ToList();
 
             dto.ID = circle.ID;
             dto.Members = circle.Users
+                .Select(GetFacadeDto).ToList();
+
+            dto.Requestors = circle.Requestors
                 .Select(GetFacadeDto).ToList();
 
             dto.Name = circle.Name;
@@ -74,6 +82,48 @@ namespace BlackDragon.TimeSheets.Applications
             {
                 Size = x.Size
             };
+        }
+
+        public void Join(long id, string userName)
+        {
+            var circle = Context.Query<Circle>()
+                .FirstOrDefault(x => x.ID == id);
+
+            if (circle == null)
+                throw new ApplicationServiceException("Circle not found");
+
+            var user = Context.Query<User>()
+                .FirstOrDefault(x => x.UserName == userName);
+
+            if (user == null)
+                throw new ApplicationServiceException("User not found");
+
+            circle.Requestors.Add(user);
+
+            Context.Save();
+        }
+
+        public void Grant(long id, string requestorUserName, string ownerUserName)
+        {
+            var circle = Context.Query<Circle>()
+                .FirstOrDefault(x => x.ID == id);
+
+            if (circle == null)
+                throw new ApplicationServiceException("Circle not found");
+
+            if (circle.Owner.UserName != ownerUserName)
+                throw new ApplicationServiceException("Only owner can grant");
+
+            var requestor = circle.Requestors
+                .FirstOrDefault(x => x.UserName == requestorUserName);
+
+            if (requestor == null)
+                throw new ApplicationServiceException("User not found");
+
+            circle.Requestors.Remove(requestor);
+            circle.Users.Add(requestor);
+
+            Context.Save();
         }
     }
 }
