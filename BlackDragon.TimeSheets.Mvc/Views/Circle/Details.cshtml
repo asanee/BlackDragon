@@ -16,9 +16,26 @@
         });
 
         $("#btnGrant").click(function () {
-            $.post('@Url.Action("Grant", "Circle", new { id = Model.ID, userName = "tokenXYZ" })'.replace("tokenXYZ", $("#btnGrant").val()), function (result) {
-                $('#results').html(result);
+            var ajaxUrl = '@Url.Action("Grant", "Circle")';
+            var Data = { userName: $("#btnGrant").val(), id: '@Model.ID' };
+
+            $.ajax({
+                url: ajaxUrl,
+                type: 'POST',
+                dataType: "json",
+                contentType: 'application/json',
+                data: JSON.stringify(Data),
+                success: function (e) {
+                    alert('success');
+                },
+                error: function (e) {
+                    alert('failed');
+                }
             });
+
+            //            $.post('@Url.Action("Grant", "Circle", new { id = Model.ID, userName = "tokenXYZ" })'.replace("tokenXYZ", $("#btnGrant").val()), function (result) {
+            //                $('#results').html(result);
+            //            });
 
             $("#btnGrant").hide();
         });
